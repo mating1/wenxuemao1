@@ -1,0 +1,37 @@
+# 中国软件杯 A3赛道 - 本专科分层实训多智能体学习辅导系统
+# 后端依赖
+
+# Web框架
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.19
+websockets==14.1
+
+# 异步HTTP
+httpx==0.28.1
+aiohttp==3.11.11
+
+# 数据库
+sqlalchemy==2.0.36
+aiosqlite==0.20.0
+alembic==1.14.1
+
+# 数据验证
+pydantic==2.10.4
+pydantic-settings==2.7.1
+
+# 缓存（可选）
+# redis==5.2.1  # Windows用户可跳过，系统自动降级
+python-dotenv==1.0.1
+
+# 安全
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# 文档导出
+reportlab==4.2.5
+python-docx==1.1.2
+
+# 工具
+loguru==0.7.3
+tenacity==9.0.0

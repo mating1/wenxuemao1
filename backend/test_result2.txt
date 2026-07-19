@@ -1,0 +1,40 @@
+﻿python : C:\Users\matin\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (7.4.3)/charset_normalizer (3.4.4) doe
+sn't match a supported version!
+At line:15 char:4576
++ ... 件杯\backend; python -m pytest tests/ --tb=line -p no:cacheprovider -q  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\matin\...ported version!:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(
+..........F..........................................F..                 [100%]
+================================== FAILURES ===================================
+E   AttributeError: 'dict' object has no attribute 'content'
+---------------------------- Captured stderr call -----------------------------
+2026-07-18 01:37:45.055 | WARNING  | app.services.llm_client:chat:79 - [LLM] deepseek 调用失败: 模拟第一次失败
+E:\中国软件杯\backend\tests\test_llm_client.py:89: AttributeError: 'dict' object has no attribute 'content'
+E   AssertionError: 应使用修正版内容，实际: # 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。
+      
+      ## 当前上下文
+      学生基础分: 50.0/1
+      
+      这是测试内容。
+    assert '修正版' in '# 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。\n\n## 当前上下文\n学生基础分: 50.0/1\n\n这是测试内容。'
+---------------------------- Captured stderr call -----------------------------
+2026-07-18 01:37:52.594 | INFO     | app.api.resources:generate_resources:36 - [Resource] 生成 handout, 分支=undergraduate, 主题=递归
+2026-07-18 01:37:52.595 | INFO     | app.agents.base:ask:63 - [Agent:资源生成Agent] 响应 66 字符, 提供商=deepseek, 延迟=5ms
+2026-07-18 01:37:52.595 | INFO     | app.agents.verification_agent:verify:101 - [Verification] 启动并行评审: handout/递归
+2026-07-18 01:37:52.595 | INFO     | app.agents.base:ask:63 - [Agent:校验防幻觉Agent] 响应 240 字符, 提供商=deepseek, 延迟=5ms
+2026-07-18 01:37:52.595 | INFO     | app.agents.verification_agent:verify:144 - [Verification] 校验完成: 准确度=8/10, 已生成修正版资源(22字符)
+2026-07-18 01:37:52.595 | INFO     | app.api.resources:generate_resources:72 - [Resource] 校验完成 handout: 质量=8.0/10, 使用修正版内容(66字符)
+E:\中国软件杯\backend\tests\test_resources.py:120: AssertionError: 应使用修正版内容，实际: # 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。
+=========================== short test summary info ===========================
+FAILED tests/test_llm_client.py::TestChatFallback::test_fallback_to_next_provider_on_failure - AttributeError: 'dict' object has no attribute 'content'
+FAILED tests/test_resources.py::TestGenerateWithVerification::test_generate_verify_uses_revised_content - AssertionError: 应使用修正版内容，实际: # 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。
+  
+  ## 当前上下文
+  学生基础分: 50.0/1
+  
+  这是测试内容。
+assert '修正版' in '# 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。\n\n## 当前上下文\n学生基础分: 50.0/1\n\n这是测试内容。'
+2 failed, 54 passed in 25.80s

@@ -1,0 +1,23 @@
+﻿python : C:\Users\matin\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (7.4.3)/charset_normalizer (3.4.4) doe
+sn't match a supported version!
+At line:15 char:4576
++ ... 件杯\backend; python -m pytest tests/ --tb=line -p no:cacheprovider -q  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\matin\...ported version!:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(
+.....................................................F..                 [100%]
+================================== FAILURES ===================================
+E   AttributeError: type object 'LearningResource' has no attribute 'topic'
+---------------------------- Captured stderr call -----------------------------
+2026-07-18 01:41:23.723 | INFO     | app.api.resources:generate_resources:36 - [Resource] 生成 handout, 分支=undergraduate, 主题=递归
+2026-07-18 01:41:23.723 | INFO     | app.agents.base:ask:63 - [Agent:资源生成Agent] 响应 66 字符, 提供商=deepseek, 延迟=5ms
+2026-07-18 01:41:23.723 | INFO     | app.agents.verification_agent:verify:101 - [Verification] 启动并行评审: handout/递归
+2026-07-18 01:41:23.723 | INFO     | app.agents.base:ask:63 - [Agent:校验防幻觉Agent] 响应 240 字符, 提供商=deepseek, 延迟=5ms
+2026-07-18 01:41:23.723 | INFO     | app.agents.verification_agent:verify:144 - [Verification] 校验完成: 准确度=8/10, 已生成修正版资源(22字符)
+2026-07-18 01:41:23.723 | INFO     | app.api.resources:generate_resources:73 - [Resource] 校验完成 handout: 质量=8.0/10, 使用修正版内容(22字符)
+E:\中国软件杯\backend\tests\test_resources.py:130: AttributeError: type object 'LearningResource' has no attribute 'topic'
+=========================== short test summary info ===========================
+FAILED tests/test_resources.py::TestGenerateWithVerification::test_generate_verify_uses_revised_content - AttributeError: type object 'LearningResource' has no attribute 'topic'
+1 failed, 55 passed in 40.07s

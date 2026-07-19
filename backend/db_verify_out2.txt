@@ -1,0 +1,119 @@
+﻿============================================================
+  DB 验证脚本 —— 修正版资源入库证据
+============================================================
+2026-07-18 01:49:13,425 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-07-18 01:49:13,425 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("user_profiles")
+2026-07-18 01:49:13,425 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,427 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("teacher_students")
+2026-07-18 01:49:13,427 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,427 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("teacher_tasks")
+2026-07-18 01:49:13,427 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,428 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("student_notifications")
+2026-07-18 01:49:13,428 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,428 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("user_resources")
+2026-07-18 01:49:13,428 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,429 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("knowledge_points")
+2026-07-18 01:49:13,429 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,429 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("error_records")
+2026-07-18 01:49:13,429 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,430 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("learning_resources")
+2026-07-18 01:49:13,430 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,431 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("learning_pathways")
+2026-07-18 01:49:13,431 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,431 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("pathway_nodes")
+2026-07-18 01:49:13,432 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,432 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("dialogue_sessions")
+2026-07-18 01:49:13,432 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,433 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("dialogue_messages")
+2026-07-18 01:49:13,433 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-07-18 01:49:13,434 INFO sqlalchemy.engine.Engine COMMIT
+2026-07-18 01:49:13,436 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-07-18 01:49:13,449 INFO sqlalchemy.engine.Engine SELECT count(learning_resources.id) AS count_1 
+FROM learning_resources
+2026-07-18 01:49:13,450 INFO sqlalchemy.engine.Engine [generated in 0.00027s] ()
+2026-07-18 01:49:13,452 INFO sqlalchemy.engine.Engine SELECT learning_resources.branch, count(learning_resources.id) AS count_1 
+FROM learning_resources GROUP BY learning_resources.branch
+2026-07-18 01:49:13,452 INFO sqlalchemy.engine.Engine [generated in 0.00016s] ()
+2026-07-18 01:49:13,454 INFO sqlalchemy.engine.Engine SELECT learning_resources.resource_type, count(learning_resources.id) AS count_1 
+FROM learning_resources GROUP BY learning_resources.resource_type
+2026-07-18 01:49:13,454 INFO sqlalchemy.engine.Engine [generated in 0.00014s] ()
+2026-07-18 01:49:13,456 INFO sqlalchemy.engine.Engine SELECT count(learning_resources.id) AS count_1 
+FROM learning_resources 
+WHERE learning_resources.debate_rounds > ?
+2026-07-18 01:49:13,456 INFO sqlalchemy.engine.Engine [generated in 0.00010s] (0,)
+2026-07-18 01:49:13,457 INFO sqlalchemy.engine.Engine SELECT avg(learning_resources.quality_score) AS avg_1 
+FROM learning_resources
+2026-07-18 01:49:13,457 INFO sqlalchemy.engine.Engine [generated in 0.00013s] ()
+2026-07-18 01:49:13,458 INFO sqlalchemy.engine.Engine SELECT max(learning_resources.quality_score) AS max_1 
+FROM learning_resources
+2026-07-18 01:49:13,459 INFO sqlalchemy.engine.Engine [generated in 0.00007s] ()
+2026-07-18 01:49:13,460 INFO sqlalchemy.engine.Engine SELECT min(learning_resources.quality_score) AS min_1 
+FROM learning_resources
+2026-07-18 01:49:13,460 INFO sqlalchemy.engine.Engine [generated in 0.00007s] ()
+2026-07-18 01:49:13,461 INFO sqlalchemy.engine.Engine SELECT learning_resources.id, learning_resources.title, learning_resources.resource_type, learning_resources.difficulty, learning_resources.branch, learning_resources.content, learning_resources.summary, learning_resources.knowledge_points, learning_resources.subject, learning_resources.generated_by_agent, learning_resources.debate_rounds, learning_resources.quality_score, learning_resources.generation_prompt, learning_resources.target_foundation_min, learning_resources.target_foundation_max, learning_resources.target_cognitive_styles, learning_resources.created_at, learning_resources.cached_for_offline 
+FROM learning_resources 
+WHERE learning_resources.debate_rounds > ? ORDER BY learning_resources.created_at DESC
+ LIMIT ? OFFSET ?
+2026-07-18 01:49:13,462 INFO sqlalchemy.engine.Engine [generated in 0.00013s] (0, 3, 0)
+2026-07-18 01:49:13,464 INFO sqlalchemy.engine.Engine SELECT learning_resources.id, learning_resources.title, learning_resources.resource_type, learning_resources.difficulty, learning_resources.branch, learning_resources.content, learning_resources.summary, learning_resources.knowledge_points, learning_resources.subject, learning_resources.generated_by_agent, learning_resources.debate_rounds, learning_resources.quality_score, learning_resources.generation_prompt, learning_resources.target_foundation_min, learning_resources.target_foundation_max, learning_resources.target_cognitive_styles, learning_resources.created_at, learning_resources.cached_for_offline 
+FROM learning_resources 
+WHERE learning_resources.branch = ? ORDER BY learning_resources.created_at DESC
+ LIMIT ? OFFSET ?
+2026-07-18 01:49:13,464 INFO sqlalchemy.engine.Engine [generated in 0.00014s] ('UNDERGRADUATE', 3, 0)
+2026-07-18 01:49:13,465 INFO sqlalchemy.engine.Engine SELECT learning_resources.id, learning_resources.title, learning_resources.resource_type, learning_resources.difficulty, learning_resources.branch, learning_resources.content, learning_resources.summary, learning_resources.knowledge_points, learning_resources.subject, learning_resources.generated_by_agent, learning_resources.debate_rounds, learning_resources.quality_score, learning_resources.generation_prompt, learning_resources.target_foundation_min, learning_resources.target_foundation_max, learning_resources.target_cognitive_styles, learning_resources.created_at, learning_resources.cached_for_offline 
+FROM learning_resources 
+WHERE learning_resources.branch = ? ORDER BY learning_resources.created_at DESC
+ LIMIT ? OFFSET ?
+2026-07-18 01:49:13,465 INFO sqlalchemy.engine.Engine [cached since 0.001492s ago] ('VOCATIONAL', 3, 0)
+2026-07-18 01:49:13,467 INFO sqlalchemy.engine.Engine SELECT count(user_profiles.id) AS count_1 
+FROM user_profiles
+2026-07-18 01:49:13,467 INFO sqlalchemy.engine.Engine [generated in 0.00009s] ()
+2026-07-18 01:49:13,468 INFO sqlalchemy.engine.Engine SELECT count(error_records.id) AS count_1 
+FROM error_records
+2026-07-18 01:49:13,468 INFO sqlalchemy.engine.Engine [generated in 0.00012s] ()
+2026-07-18 01:49:13,469 INFO sqlalchemy.engine.Engine SELECT count(user_resources.id) AS count_1 
+FROM user_resources
+2026-07-18 01:49:13,469 INFO sqlalchemy.engine.Engine [generated in 0.00012s] ()
+2026-07-18 01:49:13,470 INFO sqlalchemy.engine.Engine SELECT count(dialogue_sessions.id) AS count_1 
+FROM dialogue_sessions
+2026-07-18 01:49:13,470 INFO sqlalchemy.engine.Engine [generated in 0.00008s] ()
+2026-07-18 01:49:13,471 INFO sqlalchemy.engine.Engine SELECT count(learning_pathways.id) AS count_1 
+FROM learning_pathways
+2026-07-18 01:49:13,471 INFO sqlalchemy.engine.Engine [generated in 0.00007s] ()
+2026-07-18 01:49:13,472 INFO sqlalchemy.engine.Engine ROLLBACK
+
+[1] 资源总数: 0
+
+[2] 按分支:
+
+[3] 按资源类型:
+
+[4] 已校验资源数 (debate_rounds > 0): 0
+
+[5] 质量分: avg=0.00, min=0.0, max=0.0
+
+[6] 抽样 0 条已校验资源:
+
+[7] 双分支对比（最近 3 条）:
+    本科: 0 条
+    专科: 0 条
+
+[8] 关联表统计:
+    用户: 1, 错题: 0, 用户资源: 0
+    对话会话: 5, 学习路径: 0
+
+============================================================
+  验证结论
+============================================================
+
+  ✅ 通过:
+
+  ❌ 失败:
+     - 资源表为空，请先运行 generate_demo.py
+     - 无 debate_rounds > 0 的资源 → 校验链路未走过或未入库
+     - 双分支不全 → 可能只生成了单分支
+     - 质量分均为 0 → arbiter 评分未写入
+
+  📄 报告: data\demo_output\db_evidence_20260718_014913.md
+  📁 副本: data\demo_output\db_evidence_latest.md
+============================================================

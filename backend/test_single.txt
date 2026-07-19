@@ -1,0 +1,69 @@
+﻿python : C:\Users\matin\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (7.4.3)/charset_normalizer (3.4.4) doesn't match a supported version!
+At line:15 char:4576
++ ... 件杯\backend; python -m pytest tests/test_resources.py::TestGenerateWit ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\matin\...ported version!:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(
+============================= test session starts =============================
+platform win32 -- Python 3.13.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\matin\AppData\Local\Programs\Python\Python313\python.exe
+rootdir: E:\中国软件杯\backend
+configfile: pytest.ini
+plugins: anyio-4.12.1, dash-4.1.0, asyncio-1.4.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+tests/test_resources.py::TestGenerateWithVerification::test_generate_verify_uses_revised_content FAILED [100%]
+
+================================== FAILURES ===================================
+___ TestGenerateWithVerification.test_generate_verify_uses_revised_content ____
+
+self = <tests.test_resources.TestGenerateWithVerification object at 0x0000028333294CD0>
+client = <httpx.AsyncClient object at 0x0000028330761590>
+test_user = <app.models.student.UserProfile object at 0x0000028333211A90>
+temp_db = <function temp_db.<locals>.test_get_db at 0x00000283331D9EE0>
+
+    @pytest.mark.asyncio
+    async def test_generate_verify_uses_revised_content(self, client, test_user, temp_db):
+        """开启 verify 时，入库的 content 应是修正版而非原始生成版"""
+        resp = await client.post("/api/resources/generate", json={
+            "topic": "递归",
+            "education_level": "undergraduate",
+            "foundation": 50,
+            "resource_types": ["handout"],
+            "verify": True,
+            "question_types": [],
+            "user_id": test_user.id,
+        })
+        assert resp.status_code == 200, f"应返回 200，实际: {resp.status_code} {resp.text}"
+        data = resp.json()
+        # fake_llm 对生成返回 "# 测试讲义..."，对 arbiter 返回 "# 修正版讲义..."
+        # 修复后 results[rtype].content 应为修正版
+        content = data["resources"]["handout"]["content"]
+>       assert "修正版" in content, f"应使用修正版内容，实际: {content[:100]}"
+E       AssertionError: 应使用修正版内容，实际: # 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。
+E         
+E         ## 当前上下文
+E         学生基础分: 50.0/1
+E         
+E         这是测试内容。
+E       assert '修正版' in '# 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。\n\n## 当前上下文\n学生基础分: 50.0/1\n\n这是测试内容。'
+
+tests\test_resources.py:120: AssertionError
+---------------------------- Captured stderr call -----------------------------
+2026-07-18 01:39:53.353 | INFO     | app.api.resources:generate_resources:36 - [Resource] 生成 handout, 分支=undergraduate, 主题=递归
+2026-07-18 01:39:53.354 | INFO     | app.agents.base:ask:63 - [Agent:资源生成Agent] 响应 66 字符, 提供商=deepseek, 延迟=5ms
+2026-07-18 01:39:53.354 | INFO     | app.agents.verification_agent:verify:101 - [Verification] 启动并行评审: handout/递归
+2026-07-18 01:39:53.354 | INFO     | app.agents.base:ask:63 - [Agent:校验防幻觉Agent] 响应 240 字符, 提供商=deepseek, 延迟=5ms
+2026-07-18 01:39:53.355 | INFO     | app.agents.verification_agent:verify:144 - [Verification] 校验完成: 准确度=8/10, 已生成修正版资源(22字符)
+2026-07-18 01:39:53.355 | INFO     | app.api.resources:generate_resources:72 - [Resource] 校验完成 handout: 质量=8.0/10, 使用修正版内容(66字符)
+=========================== short test summary info ===========================
+FAILED tests/test_resources.py::TestGenerateWithVerification::test_generate_verify_uses_revised_content - AssertionError: 应使用修正版内容，实际: # 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。
+  
+  ## 当前上下文
+  学生基础分: 50.0/1
+  
+  这是测试内容。
+assert '修正版' in '# 测试讲义：你是一位**本科教育**专家，为本科生生成学习资源。\n\n## 当前上下文\n学生基础分: 50.0/1\n\n这是测试内容。'
+============================== 1 failed in 7.10s ==============================

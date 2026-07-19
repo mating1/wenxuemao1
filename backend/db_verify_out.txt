@@ -1,0 +1,10 @@
+﻿python :   File "E:\中国软件杯\backend\scripts\verify_db_evidence.py", line 316
+At line:15 char:4576
++ ... 件杯\backend; python scripts/verify_db_evidence.py --limit 3 2>&1 | Out ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  File "E:\中国软件...e.py", line 316:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    A: 是。resources.py 第 64-67 行：`quality = verify_result.get("arbiter", {}).get("quality_assessment", {})`
+                                                                         ^
+SyntaxError: f-string: valid expression required before '}'
